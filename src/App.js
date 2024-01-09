@@ -13,7 +13,7 @@ function App() {
   if (loading) {
     return <Loading />;
   }
-  return <manin>Quiz App</manin>;
+  return <h4>Quiz App</h4>;
 }
 
 export default App;
