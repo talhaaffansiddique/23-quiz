@@ -17,9 +17,9 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [waiting, setWaiting] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [questions, setQuestions] = useState(false);
+  const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
-  const [correct, setCorrect] = useState();
+  const [correct, setCorrect] = useState(0);
   const [error, setError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,13 +47,29 @@ const AppProvider = ({ children }) => {
     setIndex((oldIndex) => {
       const index = oldIndex + 1;
       if (index > questions.length - 1) {
-        //openModal
+        openModal();
         return 0;
       } else {
         return index;
       }
-      return index;
     });
+  };
+
+  const checkAnswer = (value) => {
+    if (value) {
+      setCorrect((oldState) => oldState + 1);
+    }
+    nextQuestion();
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setWaiting(true);
+    setCorrect(0);
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -71,6 +87,8 @@ const AppProvider = ({ children }) => {
         error,
         isModalOpen,
         nextQuestion,
+        checkAnswer,
+        closeModal,
       }}
     >
       {children}
