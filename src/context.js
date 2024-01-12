@@ -86,6 +86,10 @@ const AppProvider = ({ children }) => {
 
   const handleSubmit = (e) => {
     e.preventDeafult();
+    const { amount, category, difficulty } = quiz;
+
+    const url = `${API_ENDPOINT}amount=${amount}&difficulty=${difficulty}&category=${table[category]}&type=multiple`;
+    fetchQuestions(url);
   };
 
   return (
